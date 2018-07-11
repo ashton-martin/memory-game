@@ -5,8 +5,17 @@
 
 const deck = document.querySelector(".deck");
 
+function shuffleDeck() {
+  const cardsToShuffle = Array.from(document.querySelectorAll(".deck li"));
+  const shuffledCards = shuffle(cardsToShuffle);
+  for (card of shuffledCards) {
+    deck.append(card);
+  }
+}
+shuffleDeck();
+
+
 //adds the deckCard to the list of open cards in an array
-//const cards = document.querySelectorAll(".card")
 let toggledCards = [];
 
 
@@ -50,6 +59,7 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+// Shuffle cards at startup
 
 
  deck.addEventListener("click", event => {
