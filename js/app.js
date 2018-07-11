@@ -2,8 +2,12 @@
  * Create a list that holds all of your cards
  */
 
-const listOfCards = document.getElementsByClassName('card');
-//console.log(listOfCards);
+
+const deck = document.querySelector(".deck");
+
+//adds the deckCard to the list of open cards in an array
+//const cards = document.querySelectorAll(".card")
+let toggledCards = [];
 
 
 
@@ -46,12 +50,45 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
- const deck = document.querySelector(".deck");
+
 
  deck.addEventListener("click", event => {
    const deckCard = event.target;
-   if(deckCard.classList.contains("card")) {
-     deckCard.classList.toggle("open");
-     deckCard.classList.toggle("show");
-   }
+   if(deckCard.classList.contains("card") && toggledCards.length < 2 && !toggledCards.includes(deckCard)) {
+     toggleCard(deckCard);
+     addToggledCard(deckCard);
+     if (toggledCards.length === 2) {
+       checkForMatch(toggledCards);
+     }
+    }
  });
+
+// Seperate toggling into own function for code readability
+  function toggleCard(card){
+    //const card = event.target;
+      card.classList.toggle("open");
+      card.classList.toggle("show");
+
+
+    };
+
+  function addToggledCard(){
+    const card = event.target;
+    toggledCards.push(card);
+    console.log(toggledCards);
+  };
+
+  function checkForMatch(){
+    if(toggledCards[0].firstElementChild.className === toggledCards[1].firstElementChild.className){
+      toggledCards[0].classList.toggle("match");
+      toggledCards[1].classList.toggle("match");
+      toggledCards = [];
+      console.log(toggledCards)
+    } else {
+      setTimeout(() => {
+        toggleCard(toggledCards[0]);
+        toggleCard(toggledCards[1]);
+        toggledCards = [];
+      }, 1000);
+  }
+}
