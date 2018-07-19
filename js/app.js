@@ -1,6 +1,7 @@
 
 
 let moves = 0; 
+
 /*
  * Create a list that holds all of your cards
  */
@@ -114,7 +115,8 @@ function shuffleDeck() {
       toggledCards[1].classList.toggle("match");
       toggledCards = [];
       matched++;
-      if (matched === totalPairs){
+      console.log(matched);
+      if (matched === 1){
         gameOver();
       } 
     } else {
@@ -167,8 +169,8 @@ function shuffleDeck() {
     const seconds = time % 60;
     if (seconds < 10) {
       clock.innerHTML = `${minutes}:0${seconds}`
-    } else {
-      clock.innerHTML =  `${minutes}:0${seconds}`
+    } else  {
+      clock.innerHTML =  `${minutes}:${seconds}`
     }  
     
   };
@@ -206,12 +208,19 @@ document.querySelector(".modal_cancel").addEventListener("click", () => {
   toggleModal();
 });
 
-document.querySelector(".modal_replay").addEventListener("click", replayGame);
+document.querySelector(".modal_replay").addEventListener("click",() =>{
+	replayGame();
+}); 
+
+document.querySelector(".restart").addEventListener("click",() =>{
+	resetGame();
+}); 
 
 function resetGame(){
   resetClockAndTime();
   resetMoves();
   resetStars();
+  resetCards();
   shuffleDeck();
 }
 
@@ -225,11 +234,11 @@ function resetClockAndTime(){
   clockOff = true; 
   time = 0; 
   displayTime();
-}
+}matched
 
 function resetMoves() {
   moves = 0; 
-  moves = document.querySelector(".moves").innerHTML;  
+  document.querySelector(".moves").innerHTML = moves;  
 }
 
 function resetStars(){
@@ -254,10 +263,10 @@ function gameOver(){
 }
 
 
-time = 121;
-displayTime();
-moves = 16; 
-checkScore();
+// time = 121;
+// displayTime();
+// moves = 16; 
+// checkScore();
 
-writeModalStats();
-toggleModal();
+// writeModalStats();
+// toggleModal();
