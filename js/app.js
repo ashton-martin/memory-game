@@ -70,7 +70,7 @@ function shuffleDeck() {
  */
 
 
-
+// Event listener for when to start the clock
 
  deck.addEventListener("click", event => {
    const deckCard = event.target;
@@ -81,6 +81,7 @@ function shuffleDeck() {
     }
      toggleCard(deckCard);
      addToggledCard(deckCard);
+//compares the two cards that have been clicked on     
      if (toggledCards.length === 2) {
        checkForMatch(toggledCards);
        addMove();
@@ -89,6 +90,7 @@ function shuffleDeck() {
     }
  });
 
+//function for to add cards to comparison array that have not already been matched
  function isClickValid(deckCard){
   return (deckCard.classList.contains("card") && !deckCard.classList.contains("match") &&
     toggledCards.length < 2 && !toggledCards.includes(deckCard));
