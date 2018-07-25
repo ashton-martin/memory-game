@@ -7,7 +7,8 @@
 3. Open index.html in your browser.
 
 *to view the live version, click [here](https://ashton-martin.github.io/memory-game/)*
-Players 
+
+
 **Rules and Regulations**
 1. You have to match cards with identical faces.
 2. Your moves are counted out to a timer as you proceed to play the game.
