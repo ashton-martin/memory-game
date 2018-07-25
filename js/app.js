@@ -48,7 +48,7 @@ function shuffle(array) {
 
     return array;
 }
-
+// shuffles the cards around whenever the game is restarted from the beginning
 function shuffleDeck() {
   const cardsToShuffle = Array.from(document.querySelectorAll(".deck li"));
   const shuffledCards = shuffle(cardsToShuffle);
@@ -96,7 +96,7 @@ function shuffleDeck() {
     toggledCards.length < 2 && !toggledCards.includes(deckCard));
  };
 
-// Seperate toggling into own function for code readability
+// toggles the card into on/off mode
   function toggleCard(card){
     //const card = event.target;
       card.classList.toggle("open");
@@ -105,12 +105,13 @@ function shuffleDeck() {
 
     };
 
+// adds card clicked on to comparison array
   function addToggledCard(){
     const card = event.target;
     toggledCards.push(card);
     console.log(toggledCards);
   };
-
+// Compares two toggled cards
   function checkForMatch(){
     if(toggledCards[0].firstElementChild.className === toggledCards[1].firstElementChild.className){
       toggledCards[0].classList.toggle("match");
@@ -118,7 +119,7 @@ function shuffleDeck() {
       toggledCards = [];
       matched++;
       console.log(matched);
-      if (matched === 1){
+      if (matched === 8){
         gameOver();
       } 
     } else {
@@ -130,18 +131,20 @@ function shuffleDeck() {
       }
   };
 
+//updates move counter
   function addMove() {
     moves++;
     const movesText = document.querySelector(".moves");
     movesText.innerHTML = moves; 
   };
 
+//updates score
   function checkScore() {
     if (moves === 8 || moves === 16) {
       hideStar();
     }
   };
-
+// takes away star
   function hideStar(){
     const starList = document.querySelectorAll(".stars li");
     for (star of starList) {
@@ -151,18 +154,18 @@ function shuffleDeck() {
       }
     }
   };
-
+//starts clock
   function startClock(){
     clockId = setInterval(() => {
       time++;
       displayTime();
     }, 1000)
   }
-
+//stops clock
   function stopClock(){
     clearInterval(clockId);
   }
-  
+// shows clock's current timer
   function displayTime(){
     const clock = document.querySelector(".clock");
     clock.innerHTML = time; 
@@ -176,13 +179,13 @@ function shuffleDeck() {
     }  
     
   };
-
+//  flips over the card
   function toggleModal(){
     const modal = document.querySelector(".modal_background");
     modal.classList.toggle("hide");
   }
-  //toggleModal();
 
+//displays game stats
 function writeModalStats(){
   const timeStat = document.querySelector(".modal_time");
   const clockTime = document.querySelector(".clock").innerHTML;
@@ -195,6 +198,7 @@ function writeModalStats(){
   starsStat.innerHTML = `Stars = ${stars}`;
 }
 
+//displays star count
 function getStars(){
   stars = document.querySelectorAll(".stars li");
   starCount = 0; 
@@ -215,34 +219,36 @@ document.querySelector(".modal_replay").addEventListener("click",() =>{
 }); 
 
 document.querySelector(".restart").addEventListener("click",() =>{
-	resetGame();
+  resetGame();
 }); 
-
+//resets game 
 function resetGame(){
+  toggledCards.pop()
   resetClockAndTime();
   resetMoves();
   resetStars();
   resetCards();
   shuffleDeck();
-}
 
+}
+//replays game after current round
 function replayGame(){
   resetGame();
   toggleModal();
 }
-
+//resets clock
 function resetClockAndTime(){
   stopClock();
   clockOff = true; 
   time = 0; 
   displayTime();
 }matched
-
+//resets moves to 0
 function resetMoves() {
   moves = 0; 
   document.querySelector(".moves").innerHTML = moves;  
 }
-
+// resets stars to 0
 function resetStars(){
   stars = 0; 
   const starList = document.querySelectorAll(".stars li");
@@ -250,14 +256,14 @@ function resetStars(){
     star.style.display = "inline"; 
   }
 }
-
+//resets the cards back in a shuffled mode
 function resetCards(){
   const cards = document.querySelectorAll(".deck li");
   for (let card of cards){
     card.className = "card";
   }
 }
-
+//ends game
 function gameOver(){
   stopClock();
   writeModalStats();
@@ -265,10 +271,4 @@ function gameOver(){
 }
 
 
-// time = 121;
-// displayTime();
-// moves = 16; 
-// checkScore();
 
-// writeModalStats();
-// toggleModal();
